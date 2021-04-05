@@ -15,25 +15,37 @@ import sys
 #  3. STRING_ARRAY queries
 #
 
+def setbit(val, i, bit):
+
+    num = 1 << i
+
+    if bit:
+        return val | num
+
+    return val & ~num
+
 def changeBits(a, b, queries):
     # Write your code here
+    a = int(a.strip(),2)
+    b = int(b.strip(),2)
     result = ''
     for query in queries:
         query_data = query.split(' ')
+        
+        inx = int(query_data[1])
+
         if (query_data[0] == 'set_a'):
-            index = len(a) - 1 - int(query_data[1])
-            a = a[:index] + query_data[2] + a[index+1:]
+            bit = int(query_data[2])
+
+            a = setbit(a, inx, bit)
         elif (query_data[0] == 'set_b'):
-            index = len(b) - 1 - int(query_data[1])
-            b = b[:index] + query_data[2] + a[index+1:]
+            bit = int(query_data[2])
+
+            b = setbit(b, inx, bit)
         else:
-            int_sum_value = int(a, 2) + int(b, 2)
-            binary_sum = bin(int_sum_value)[2:]
-            index = len(binary_sum) - 1 - int(query_data[1])
-            if (index < 0):
-                result += '0'
-            else: 
-                result += str(binary_sum[index])
+            c = a+b
+            cbit = int (bool (c & (1<<inx)))
+            result += str(cbit)
     print(result)
         
 
