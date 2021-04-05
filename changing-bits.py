@@ -24,9 +24,10 @@ def changeBits(a, b, queries):
             index = len(a) - 1 - int(query_data[1])
             a = a[:index] + query_data[2] + a[index+1:]
         elif (query_data[0] == 'set_b'):
+            index = len(b) - 1 - int(query_data[1])
             b = b[:index] + query_data[2] + a[index+1:]
         else:
-            int_sum_value = int(''.join(a), 2) + int(''.join(b), 2)
+            int_sum_value = int(a, 2) + int(b, 2)
             binary_sum = bin(int_sum_value)[2:]
             index = len(binary_sum) - 1 - int(query_data[1])
             if (index < 0):
